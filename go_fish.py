@@ -139,3 +139,14 @@ while True:
 				for suit in range(4):
 					hand.remove_card(Card(suit,rank))
 				hand.piles += 1
+
+
+	print("Player 1 Cards:")
+	for card in players[0].cards:
+		print(card.rank)
+	print()
+	print("Player 2 Cards:")
+	for card in players[1].cards:
+		print(card.rank)
+
+	current_player_index = turn_index % len(players)
