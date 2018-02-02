@@ -166,3 +166,30 @@ while True:
 		print("No cards in your hand!  Skipping your turn!\n")
 		turn_index += 1
 		continue
+
+	user = input("Player {}: Please choose a card rank you would like to ask the other player if they have (between 1-13): ".format(current_player_index + 1))
+	while len(user) == 0 or not user.isdigit() or int(user) < 1 or int(user) > 13:
+		print("\nPlease choose a VALID number!!\n")
+		user = input("Player {}: Please choose a card rank you would like to ask the other player if they have (between 1-13): ".format(current_player_index + 1))
+	while not int(user) in [card.rank for card in players[current_player_index].cards]:
+		print("\nPlease choose a rank which you have in hand!!\n")
+		user = input("Player {}: Please choose a card rank you would like to ask the other player if they have (between 1-13): ".format(current_player_index + 1))
+	other_player_index = (turn_index + 1) % len(players)
+	cards_to_remove = []
+	for card in players[other_player_index].cards:
+		if card.rank == int(user):
+			cards_to_remove.append((card.suit, card.rank))
+	if len(cards_to_remove) == 0:
+		print("---GO FISH!!---\n")
+		draw_card = game_deck.pop_card()
+		players[current_player_index].add_card(draw_card)
+		if draw_card.rank == int(user):
+			print("You drew what you asked for!!")
+			continue
+	else:
+		for matching_suit, matching_rank in cards_to_remove:
+			temp_card = Card(matching_suit, matching_rank)
+			players[other_player_index].remove_card(temp_card)
+			players[current_player_index].add_card(temp_card)
+
+	turn_index += 1
