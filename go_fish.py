@@ -150,3 +150,19 @@ while True:
 		print(card.rank)
 
 	current_player_index = turn_index % len(players)
+
+
+	if len(players[0].cards) == 0 and len(players[1].cards) == 0 and len(game_deck.cards) == 0:
+		print("Game over!!")
+		if players[0].piles > players[1].piles:
+			print("Player 1 wins the game with {} piles!".format(players[0].piles))
+		if players[0].piles == players[1].piles:
+			print("Tie game!")
+		else:
+			print("Player 2 wins the game with {} piles!".format(players[1].piles))
+		break
+
+	if len(players[current_player_index].cards) == 0:
+		print("No cards in your hand!  Skipping your turn!\n")
+		turn_index += 1
+		continue
